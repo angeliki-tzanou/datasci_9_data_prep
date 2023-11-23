@@ -44,8 +44,8 @@ df1_clean.columns
 
 
 ## save clean data to csv under processed in datasets
-df1_clean.to_csv('datasets/processed/LeadBloodLevels_2017_byMSA.csv', index=False)
-
+df1_clean.to_csv(, index=False)
+'datasets/processed/LeadBloodLevels_2017_byMSA.csv'
 #################################################
 ## DATASET 2 CLEANING:
 
