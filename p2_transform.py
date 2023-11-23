@@ -1,4 +1,6 @@
 import pandas as pd 
+import numpy as np
+from scipy import stats
 from sklearn.preprocessing import OrdinalEncoder
 
 ## get data raw
@@ -44,3 +46,43 @@ df1_clean.columns
 ## save clean data to csv under processed in datasets
 df1_clean.to_csv('datasets/processed/LeadBloodLevels_2017_byMSA.csv', index=False)
 
+#################################################
+## DATASET 2 CLEANING:
+
+## get data raw
+df2 = pd.read_pickle('datasets/raw/Peds_ED_visits.pkl')
+
+## get column names
+df2.columns
+df2.head(10)
+
+## do some data cleaning of colun names, 
+## make them all lower case, replmove white spaces and rpelace with _ 
+df2.columns = df2.columns.str.lower().str.replace(' ', '_')
+df2.columns
+
+## get data types
+df2.dtypes 
+len(df2)
+
+## Decided to NOT drop any columns in this dataset
+#to_drop = ['shape__area', 'shape__length']
+#df1.drop(to_drop, axis=1, inplace=True, errors='ignore')
+
+# Ensure each column is recognized as numerical since this dataset has ONLY numerical columns:
+## Hence applying it all the columns:
+df2_clean = df2.apply(pd.to_numeric, errors='coerce')
+
+# Filling in the blank spaces with NaN instead
+df2_clean.replace('', np.nan, inplace=True)
+
+df2.head(10)
+
+## Dropping any rows with NaN values if present 
+df2_clean.dropna(inplace=True)
+
+df2_clean.head(10)
+df2_clean.columns 
+
+## save clean data to csv under processed in datasets
+df2_clean.to_csv('datasets/processed/Peds_ED_visits.csv', index=False)
